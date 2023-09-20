@@ -30,3 +30,24 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media (max: 600) {
+  .large {
+    display: node;
+  }
+  .small {
+    display: flex;
+  }
+  .uls {
+    overflow-y: auto;
+  }
+}
+
+@media (min: 601) {
+  .large {
+    display: flex;
+  }
+  .small {
+    display: none;
+  }
+}

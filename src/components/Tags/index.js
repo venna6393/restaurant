@@ -13,9 +13,11 @@ const Tags = props => {
   }
 
   return (
-    <button type="button" data-testid="list1" className={text} onClick={click2}>
-      {list.menu_category}
-    </button>
+    <li>
+      <button type="button" className={text} onClick={click2}>
+        {list.menu_category}
+      </button>
+    </li>
   )
 }
 

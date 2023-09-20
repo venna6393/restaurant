@@ -10,10 +10,21 @@ const stage = {
 }
 
 class Home extends Component {
-  state = {stage1: stage.loading, list1: [], itemCount: 0, selected: ''}
+  state = {stage1: stage.loading, list1: [], itemCount: 0, selected: '11'}
 
   componentDidMount() {
     this.getList()
+  }
+
+  inc1 = () => {
+    this.setState(prevState => ({itemCount: prevState.itemCount + 1}))
+  }
+
+  dec1 = () => {
+    const {itemCount} = this.state
+    if (itemCount > 0) {
+      this.setState(prevState => ({itemCount: prevState.itemCount - 1}))
+    }
   }
 
   click1 = id => {
@@ -22,15 +33,19 @@ class Home extends Component {
 
   getList = async () => {
     this.setState({stage1: stage.loading})
+    const options = {
+      method: 'GET',
+    }
     const response = await fetch(
       'https://run.mocky.io/v3/a67edc87-49c7-4822-9cb4-e2ef94cb3099',
+      options,
     )
     const data = await response.json()
     if (response.ok === true) {
       console.log(data)
       this.setState({
         stage1: stage.success,
-        list1: data,
+        list1: data[0],
         selected: data[0].table_menu_list[0].menu_category_id,
       })
     } else {
@@ -39,7 +54,7 @@ class Home extends Component {
   }
 
   renderPart = () => {
-    const {stage1, list1, selected} = this.state
+    const {stage1, list1, selected, itemCount} = this.state
 
     switch (stage1) {
       case stage.loading:
@@ -53,8 +68,16 @@ class Home extends Component {
       case stage.success:
         return (
           <div>
+            <div className="nav">
+              <p>{list1.restaurant_name}</p>
+              <div className="cart">
+                <p>My Orders</p>
+                <AiOutlineShoppingCart />
+                <span>{itemCount}</span>
+              </div>
+            </div>
             <ul className="ul">
-              {list1[0].table_menu_list.map(each => (
+              {list1.table_menu_list.map(each => (
                 <Tags
                   list={each}
                   click1={this.click1}
@@ -64,9 +87,16 @@ class Home extends Component {
               ))}
             </ul>
             <hr />
-            {list1[0].table_menu_list.map(each => {
+            {list1.table_menu_list.map(each => {
               if (each.menu_category_id === selected) {
-                return <Item list={each} key={`item${each.menu_category_id}`} />
+                return (
+                  <Item
+                    list={each}
+                    key={`item${each.menu_category_id}`}
+                    inc1={this.inc1}
+                    dec1={this.dec1}
+                  />
+                )
               }
               return null
             })}
@@ -78,18 +108,8 @@ class Home extends Component {
   }
 
   render() {
-    const {itemCount} = this.state
     return (
       <div>
-        <div className="nav">
-          <p>UNI Resto Cafe</p>
-          <div className="cart">
-            <p>My Orders</p>
-            <AiOutlineShoppingCart />
-            <span>{itemCount}</span>
-          </div>
-        </div>
-        <hr />
         <div>{this.renderPart()}</div>
       </div>
     )

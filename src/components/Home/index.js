@@ -80,12 +80,16 @@ class Home extends Component {
               <p>{list1.restaurant_name}</p>
               <div className="cart">
                 <p>My Orders</p>
+
                 <Link to="/cart">
                   <AiOutlineShoppingCart />
                 </Link>
                 <button type="button" onClick={this.logout1}>
                   Logout
                 </button>
+
+                <AiOutlineShoppingCart />
+
                 <span>{itemCount}</span>
               </div>
             </div>

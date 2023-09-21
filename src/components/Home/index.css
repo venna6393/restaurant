@@ -9,3 +9,45 @@
   display: flex;
   align-items: center;
 }
+
+.ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style-type: none;
+}
+
+.underline {
+  text-decoration: underline;
+}
+.img {
+  width: 300px;
+  height: 200px;
+  margin-left: 40px;
+  margin-bottom: 40px;
+}
+.card {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max: 600) {
+  .large {
+    display: node;
+  }
+  .small {
+    display: flex;
+  }
+  .uls {
+    overflow-y: auto;
+  }
+}
+
+@media (min: 601) {
+  .large {
+    display: flex;
+  }
+  .small {
+    display: none;
+  }
+}
